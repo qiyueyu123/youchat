@@ -5,10 +5,10 @@ package com.qiyueyu.youchat.enums;
  */
 public enum  MsgActionEnum {
 
-    CONNECT(1, "初始换连接"),
+    CONNECT(1, "初始化连接(第一次或重连)"),
     CHAT_MSG(2, "聊天信息"),
     SIGNED_MSG(3, "聊天信息签收"),
-    PULL_FRIEND(4, "拉取好友");
+    PULL_FRIEND(4, "拉取好友信息");
 
     private final Integer type;
     private final String content;

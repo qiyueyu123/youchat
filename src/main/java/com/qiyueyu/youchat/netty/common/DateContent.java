@@ -18,4 +18,6 @@ public class DateContent implements Serializable {
     private Integer action;
     //传递的消息
     private ChatDate chatDate;
+    //扩展字段
+    private String extend;
 }
