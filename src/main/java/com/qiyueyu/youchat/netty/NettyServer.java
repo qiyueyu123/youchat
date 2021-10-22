@@ -76,7 +76,7 @@ public class NettyServer implements CommandLineRunner {
                     pipeline.addLast(business,"chunkedWriteHandler", new ChunkedWriteHandler());
                     pipeline.addLast(business, "httpObjectAggregator", new HttpObjectAggregator(httpObjectAggregatorMaxContentLength));
                     pipeline.addLast(business, "webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(websocketPath));
-                    pipeline.addLast(business, "chatHandler", new ChatHandler());
+                    pipeline.addLast(business, "chatHandler",chatHandler);
                 }
             });
             channelFuture = serverBootstrap.bind(CommonConstants.NETTY_SERVER_PORT).sync();
@@ -93,6 +93,6 @@ public class NettyServer implements CommandLineRunner {
     @Async
     @Override
     public void run(String... args) throws Exception {
-
+        start();
     }
 }
