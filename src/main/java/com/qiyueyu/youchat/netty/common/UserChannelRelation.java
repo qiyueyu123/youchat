@@ -1,8 +1,8 @@
 package com.qiyueyu.youchat.netty.common;
 
+import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 
-import java.nio.channels.Channel;
 import java.util.HashMap;
 import java.util.Map;
 

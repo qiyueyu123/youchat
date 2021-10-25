@@ -12,5 +12,6 @@ public class SignedMsgStrategy implements MsgStrategy {
     @Override
     public void msgProcessing(DateContent content, Channel channel) {
 
+
     }
 }

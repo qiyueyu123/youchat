@@ -7,10 +7,7 @@ import com.qiyueyu.youchat.service.impl.ConnectMsgStrategy;
 import com.qiyueyu.youchat.service.impl.PullFriendMsgStrategy;
 import com.qiyueyu.youchat.service.impl.SignedMsgStrategy;
 import com.qiyueyu.youchat.utils.JsonUtils;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -63,5 +60,40 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             PullFriendMsgStrategy pullFriendMsgStrategy = new PullFriendMsgStrategy();
             pullFriendMsgStrategy.msgProcessing(dateContent, channel);
         }
+    }
+
+
+    /**
+     * 获取客户端 channel，放到 ChannelGroup 集中管理
+     * @param ctx 管道信息
+     * @throws Exception
+     */
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        userGroup.add(ctx.channel());
+    }
+
+    /**
+     *handler 移除时，删除 ChannelGroup 中的 channel
+     * @param ctx 管道信息
+     * @throws Exception
+     */
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        userGroup.remove(ctx.channel());
+    }
+
+    /**
+     * 出错时，关闭连接，并删除 channelGroup 中的 channel
+     * @param ctx 管道信息
+     * @param cause 报错信息
+     * @throws Exception
+     */
+    @Override
+    @Deprecated
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        log.info("出错原因：{}", cause.getMessage());
+        ctx.channel().close();
+        userGroup.remove(ctx.channel());
     }
 }

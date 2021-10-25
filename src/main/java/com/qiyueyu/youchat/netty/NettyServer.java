@@ -42,11 +42,8 @@ public class NettyServer implements CommandLineRunner {
     @Value("${youchat.netty-server.threads}")
     private int threads;
 
-    @Value("${youchat.netty-server.idle}")
+    @Value("${youchat.idle.timeout}")
     private int idleTime;
-
-    @Value("${youchat.httpObjectAggregator.maxContentLength}")
-    private int httpObjectAggregatorMaxContentLength;
 
     @Value("${youchat.WebSocketServerProtocolHandler.websocketPath}")
     private String websocketPath;
@@ -74,7 +71,7 @@ public class NettyServer implements CommandLineRunner {
                     pipeline.addLast(business, new LoggingHandler());
                     pipeline.addLast(business, "httpServerCodec", new HttpServerCodec());
                     pipeline.addLast(business,"chunkedWriteHandler", new ChunkedWriteHandler());
-                    pipeline.addLast(business, "httpObjectAggregator", new HttpObjectAggregator(httpObjectAggregatorMaxContentLength));
+                    pipeline.addLast(business, "httpObjectAggregator", new HttpObjectAggregator(1024 * 64));
                     pipeline.addLast(business, "webSocketServerProtocolHandler", new WebSocketServerProtocolHandler(websocketPath));
                     pipeline.addLast(business, "chatHandler",chatHandler);
                 }

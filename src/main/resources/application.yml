@@ -6,12 +6,17 @@ youchat:
     threads: 128 #business线程池数量
   idle:
     timeout: 120 #连接读写空闲时间（s），超时则断开连接
-  httpObjectAggregator:
-    maxContentLength: 1024*64
   WebSocketServerProtocolHandler:
     websocketPath: / #客户端访问路由
 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/youchat?characterEncoding=utf8&useSSL=false
 
-
-
-
+mybatis:
+mybatis-plus:
+  type-aliases-package: com.qiyueyu.youchat.entity
+  mapper-locations: mapper/*.xml
