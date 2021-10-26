@@ -43,7 +43,7 @@ public class Generator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("Lql");
+        gc.setAuthor("qiyueyu");
         gc.setOpen(false);
         // 设置名字
         gc.setControllerName("%sController");
