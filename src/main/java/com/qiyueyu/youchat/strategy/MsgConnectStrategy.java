@@ -1,15 +1,14 @@
-package com.qiyueyu.youchat.service.impl;
+package com.qiyueyu.youchat.strategy;
 
 import com.qiyueyu.youchat.netty.common.DateContent;
 import com.qiyueyu.youchat.netty.common.UserChannelRelation;
-import com.qiyueyu.youchat.service.MsgStrategy;
 import io.netty.channel.Channel;
 
 
 /**
  * 消息策略实现 ： 消息类型为：CONNECT 初始化连接(第一次或重连)
  */
-public class ConnectMsgStrategy implements MsgStrategy {
+public class MsgConnectStrategy implements MsgStrategy {
 
     @Override
     public void msgProcessing(DateContent content, Channel channel) {

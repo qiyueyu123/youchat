@@ -1,4 +1,4 @@
-package com.qiyueyu.youchat.service;
+package com.qiyueyu.youchat.strategy;
 
 import com.qiyueyu.youchat.netty.common.DateContent;
 import io.netty.channel.Channel;

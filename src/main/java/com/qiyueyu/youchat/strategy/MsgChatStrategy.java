@@ -1,14 +1,22 @@
-package com.qiyueyu.youchat.service.impl;
+package com.qiyueyu.youchat.strategy;
 
+import com.qiyueyu.youchat.mapper.UserMapper;
 import com.qiyueyu.youchat.netty.common.ChatDate;
 import com.qiyueyu.youchat.netty.common.DateContent;
-import com.qiyueyu.youchat.service.MsgStrategy;
+import com.qiyueyu.youchat.service.UserService;
 import io.netty.channel.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 消息策略实现 消息类型：CHAT_MSG 聊天信息
  */
-public class ChatMsgStrategy implements MsgStrategy {
+public class MsgChatStrategy implements MsgStrategy {
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    UserMapper userMapper;
+
 
     @Override
     public void msgProcessing(DateContent content, Channel channel) {
@@ -17,5 +25,7 @@ public class ChatMsgStrategy implements MsgStrategy {
         String msg = chatDate.getMsg();
         String senderId = chatDate.getSenderId();
         String receiveId = chatDate.getReceiveId();
+
+        String msgId = userService.saveChatDate(chatDate);
     }
 }

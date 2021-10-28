@@ -1,12 +1,13 @@
 package com.qiyueyu.youchat.entity;
 
-import java.time.LocalDateTime;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -37,7 +38,7 @@ public class ChatMsg implements Serializable {
     private Boolean signFlag;
 
     @ApiModelProperty(value = "消息创建时间")
-    private LocalDateTime createTime;
+    private Date createTime;
 
 
 }
