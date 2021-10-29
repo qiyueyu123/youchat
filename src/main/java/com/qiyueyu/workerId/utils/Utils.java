@@ -1,7 +1,7 @@
 package com.qiyueyu.workerId.utils;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.InputStream;
 import java.util.Calendar;
 
 public class Utils {
@@ -17,25 +17,7 @@ public class Utils {
     public static InputStream classResourceToStream(String resourceName) {
         return getClassLoader().getResourceAsStream(resourceName);
     }
-
-
-    public static String firstLine(String classResourceName) {
-        InputStream inputStream = null;
-        try {
-            inputStream = classResourceToStream(classResourceName);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-
-            return bufferedReader.readLine();
-        } catch (IOException e) {
-            return null;
-        } finally {
-            if (inputStream != null) try {
-                inputStream.close();
-            } catch (IOException e) {
-                // ignore
-            }
-        }
-    }
+    
 
     public static long midnightMillis() {
         // today

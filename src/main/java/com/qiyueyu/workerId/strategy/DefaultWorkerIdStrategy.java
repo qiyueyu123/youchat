@@ -1,5 +1,8 @@
 package com.qiyueyu.workerId.strategy;
 
+/**
+ * workerId 策略实现类
+ */
 public class DefaultWorkerIdStrategy implements WorkerIdStrategy {
 
     public static final WorkerIdStrategy instance = new DefaultWorkerIdStrategy();

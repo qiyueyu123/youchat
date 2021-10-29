@@ -31,12 +31,6 @@ import org.springframework.stereotype.Component;
 @Order
 public class NettyServer implements CommandLineRunner {
 
-    private ChannelFuture channelFuture;
-
-    private EventLoopGroup bossGroup = null;
-
-    private EventLoopGroup workerGroup = null;
-
     private EventLoopGroup business = null;
 
     @Value("${youchat.netty-server.threads}")
@@ -52,8 +46,8 @@ public class NettyServer implements CommandLineRunner {
     private ChatHandler chatHandler;
 
     public void start() {
-        bossGroup = new NioEventLoopGroup(new DefaultThreadFactory("boss"));
-        workerGroup = new NioEventLoopGroup(new DefaultThreadFactory("work"));
+        EventLoopGroup bossGroup = new NioEventLoopGroup(new DefaultThreadFactory("boss"));
+        EventLoopGroup workerGroup = new NioEventLoopGroup(new DefaultThreadFactory("work"));
         business = new DefaultEventLoopGroup(threads, new DefaultThreadFactory("business"));
 
         ServerBootstrap serverBootstrap = new ServerBootstrap();
@@ -65,7 +59,7 @@ public class NettyServer implements CommandLineRunner {
         try {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
-                protected void initChannel(SocketChannel ch) throws Exception {
+                protected void initChannel(SocketChannel ch) {
                     ChannelPipeline pipeline = ch.pipeline();
                     pipeline.addLast(business, "idleCheck", new IdleStateHandler(0, 0, idleTime));
                     pipeline.addLast(business, new LoggingHandler());
@@ -76,8 +70,9 @@ public class NettyServer implements CommandLineRunner {
                     pipeline.addLast(business, "chatHandler",chatHandler);
                 }
             });
-            channelFuture = serverBootstrap.bind(CommonConstants.NETTY_SERVER_PORT).sync();
+            ChannelFuture channelFuture = serverBootstrap.bind(CommonConstants.NETTY_SERVER_PORT).sync();
             log.info("端口启动成功：{}", CommonConstants.NETTY_SERVER_PORT);
+            channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -89,7 +84,7 @@ public class NettyServer implements CommandLineRunner {
 
     @Async
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         start();
     }
 }
